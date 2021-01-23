@@ -1,0 +1,44 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+    <h1>Update order</h1>
+
+    <table class="table mb-5">
+      <form method="POST">
+          <tbody>
+            {% csrf_token %}
+            <thead>
+              <tr>
+                <th></th>
+                <td>Current</td>
+                <td>New</td>
+              </tr>
+            </thead>
+            <tr>
+              <th scope="row">Scheduled return date</th>
+              <td>{{ order.plated_end_at }}</td>
+              <td>{{ form.plated_end_at }}</td>
+            </tr>
+            {% if order.end_at %}
+              <tr>
+                  <th scope="row">Return date</th>
+                  <td>{{ order.end_at }}</td>
+                  <td>{{ form.end_at }}</td>
+              </tr>
+            {% else %}
+            <tr>
+              <th scope="row">Return date</th>
+              <td> _____ </td>
+              <td>{{ form.end_at }}</td>
+          </tr>
+            {% endif %}
+            <tr>
+              <th scope="row">
+                <button type="submit" class="btn btn-success">Save</button>
+              </th>
+              <td></td>
+              <td></td>
+          </tr>
+          </tbody>
+        </form>
+      </table>
+{% endblock content %}

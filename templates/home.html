@@ -1,0 +1,37 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Library</h1>
+        <p class="lead">Join our library. With us already</p>
+    </div>
+
+    <div class="card-deck mb-3 text-center">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title">{{ count_of_users }}</h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>Active users</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title">{{ count_of_books }}</h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>Books in stock</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title">{{ count_of_orders }}</h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>Orders</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

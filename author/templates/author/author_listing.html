@@ -1,0 +1,23 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Authors Catalog</h1>
+
+    <div class="btn-group mb-3" role="group" aria-label="...">
+        <a class="btn btn-outline-primary" href="{% url 'add_new_author' %}" role="button">Add</a>
+        <a class="btn btn-outline-dark" href="{% url 'find_author' %}" role="button">Find</a>
+    </div>
+
+    {% for author in authors %}
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+            <h2 class="mb-0">{{ author.name }}</h2>
+            <h2 class="mb-0">{{ author.patronymic }}</h2>
+            <h3 class="mb-0">{{ author.surname }}</h3>
+            <a href="{% url 'author_details' pk=author.id %}" class="stretched-link">Read more</a>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% include 'paginator.html' with data=authors %}
+{% endblock content %}

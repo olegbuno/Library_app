@@ -1,0 +1,28 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+<h1>Orders history</h1>
+    <div class="btn-group mb-3" role="group" aria-label="...">
+        <a class="btn btn-outline-secondary" href="{% url 'find_order' %}" role="button">Find order</a>
+        <a class="btn btn-outline-success" href="{% url 'make_order' %}" role="button">Make order</a>
+    </div>
+    {% for order in orders %}
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+            <h3 class="mb-0">{{ order.book.name }}</h3>
+            <div class="mb-1">
+                Lended by: <strong>{{ order.user.first_name }} {{ order.user.last_name }}</strong>
+            </div>
+            <div class="mb-1 text-muted">Order date: {{ order.created_at }}</div>
+            <div class="mb-1 text-muted">Scheduled return date: {{ order.plated_end_at }}</div>
+            {% if order.end_at %}
+                <div class="mb-1 text-muted">Return date: {{ order.end_at }}</div>
+            {% endif %}
+            <p class="card-text mb-auto">{{ order.description }}</p>
+            <a href="{% url 'order_details' pk=order.id %}" class="stretched-link">More</a>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% include 'paginator.html' with data=orders %}
+
+{% endblock content %}

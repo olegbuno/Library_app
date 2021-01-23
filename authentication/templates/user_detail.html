@@ -1,0 +1,90 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+  <h1>User info:</h1>
+
+  {% if user.id == context_user.id %}
+  <div class="btn-group mb-3" role="group">
+    <a class="btn btn-outline-dark" href="{% url 'user_upd' %}" role="button">Update</a>
+    <a class="btn btn-outline-danger" href="{% url 'user_del' %}" role="button">Delete</a>
+  </div>
+  {% endif %}
+
+  <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">Name</th>
+          <td>{{ context_user.first_name }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Middle nane</th>
+          <td>{{ context_user.middle_name }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Last name</th>
+          <td>{{ context_user.last_name }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Email</th>
+          <td>{{ context_user.email }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Status</th>
+          <td>
+              {% if context_user.is_active %}
+                  Online
+              {% else %}
+                  Offline
+              {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Registration Date</th>
+          <td>{{ context_user.created_at }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Last UpDate</th>
+          <td>{{ context_user.updated_at }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Permissions</th>
+          <td>
+          {% if context_user.role == 1 %}
+                  Admin
+              {% else %}
+                  Order context_user
+              {% endif %}
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <h3 class="mt-5">Orders history</h3>
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Book title</th>
+          <th scope="col">Order date</th>
+          <th scope="col">Schedude return date</th>
+          <th scope="col">Return date</th>
+        </tr>
+      </thead>
+        {% for order in orders %}
+            <tr>
+              <th scope="row">{{ order.id }}</th>
+              <td><a href="{% url 'book_details' pk=order.book.id %}">{{ order.book.name }}</a></td>
+              <td>{{ order.created_at }}</td>
+              <td>{{ order.plated_end_at }}</td>
+              <td>
+                {% if order.end_at %}
+                  {{ order.plated_end_at }}
+                {% else %}
+                  ____
+                {% endif %}
+              </td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock content %}

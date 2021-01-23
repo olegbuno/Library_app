@@ -1,0 +1,30 @@
+{% extends 'wrapper.html' %}
+
+{% block optional-head-tags %}
+<link href="signin.css" rel="stylesheet">
+{% endblock %}
+
+
+
+{% block title %}
+Sign_in
+{% endblock %}
+
+{% block content %}
+
+  <form class="container form-signin col-md-4 center-block" method="POST">
+    {% csrf_token %}
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <label for="inputEmail" class="visually-hidden">Email address</label>
+    {{ form.email }}
+    <label for="inputPassword" class="visually-hidden">Password</label>
+    {{ form.password }}
+    <button class="w-100 btn btn-lg btn-primary mt-3 mb-2" type="submit">Sign in</button>
+
+       <a class="w-100 btn btn-lg btn-primary" href="{% url 'user_sign_up' %}">Not signed up yet?</a>
+  </form>
+
+
+{% endblock %}
+
+

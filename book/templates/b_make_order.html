@@ -1,0 +1,23 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+
+<article class="blog-post">
+    <h2 class="blog-post-title">{{ book.name }}</h2>
+    <h3>By 
+        {% for author in book.get_authors %}
+            <a href="{%url 'author_details' pk=author.id%}">{{ author.name }} {{ author.surname }}</a>
+        {% endfor %}
+    </h3>
+    <hr>
+    <p>In Stock: {{ book.count }}</p>
+</article>
+
+<div class="ui-widget">
+    <form method="POST">
+        {% csrf_token %}
+        <label for="book" class="form-label">Plated end date</label>
+        {{ form.plated_end_at }}
+        <button type="submit" class="btn btn-success mt-3">Make Order</button>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,86 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+    <h1>Order details</h1>
+    <div class="btn-group mb-3" role="group">
+      <a class="btn btn-outline-dark" href="{% url 'update_order' pk=order.id %}" role="button">Update order</a>
+      <a class="btn btn-outline-danger" href="{% url 'delete_order' pk=order.id %}" role="button">Delete order</a>
+  </div>
+    <table class="table mb-5">
+        <tbody>
+          <tr>
+            <th scope="row">ID</th>
+            <td>{{ order.id }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Date</th>
+            <td>{{ order.created_at }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Scheduled return date</th>
+            <td>{{ order.plated_end_at }}</td>
+          </tr>
+          {% if order.end_at %}
+            <tr>
+                <th scope="row">Return date</th>
+                <td>{{ order.end_at }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Status</th>
+                <td>
+                    Closed
+                </td>
+            </tr>
+          {% else %}
+            <tr>
+                <th scope="row">Status</th>
+                <td>
+                    Lended
+                </td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+
+      <h2>Client info <a href="{% url 'user_details' pk=order.user.id %}" class="btn btn-outline-primary ml-3">Open profile</a> </h2>
+      
+      <table class="table mb-5">
+        <tbody>
+          <tr>
+            <th scope="row">First name</th>
+            <td>{{ order.user.first_name }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Last name</th>
+            <td>{{ order.user.last_name }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Email</th>
+            <td>{{ order.user.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+
+      <h2>Book info <a href="{% url 'book_details' pk=order.book.id %}" class="btn btn-outline-primary ml-3">Book details</a></h2>
+
+       <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Title</th>
+            <td>{{ order.book.name }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Authors</th>
+            <td>{% for author in order.book.get_authors %}
+                {{ author.name }} {{ author.surname }},
+            {% endfor %}</td>
+          </tr>
+          <tr>
+            <th scope="row">Count</th>
+            <td>{{ order.book.count }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h5>Short description</h5>
+      <p>{{ order.book.description|truncatechars:255 }}</p>
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<div class="ui-widget">
+    <form method="GET">
+        <label for="book" class="form-label">Book title</label>
+        <input class="form-control mb-3" id="book" name="book">
+        <label for="book" class="form-label">Plated end date</label>
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success mt-3">Make Order</button>
+    </form>
+</div>
+
+<script>
+    $( function() {
+    var availableTags = '{% url 'book_autocomplete' %}'
+    $( "#book" ).autocomplete({
+        source: availableTags,
+        minLength: 2
+        });
+    } );
+</script>
+{% endblock content %}

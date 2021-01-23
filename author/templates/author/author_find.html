@@ -1,0 +1,36 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+    <h1>Find author</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputEmail1">Name  - <strong>{{ name }}</strong></label>
+            {{ form.name }}
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Surname  - <strong>{{ surname }}</strong></label>
+            {{ form.surname }}
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Patronymic  - <strong>{{ patronymic }}</strong></label>
+            {{ form.patronymic }}
+        </div>
+        <button type="submit" class="btn btn-primary">Find</button>
+    </form>
+
+
+    {% if authors %}
+    <div class="mt-5">
+        {% for author in authors %}
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <h2 class="mb-0">{{ author.name }}</h2>
+                <h2 class="mb-0">{{ author.patronymic }}</h2>
+                <h3 class="mb-0">{{ author.surname }}</h3>
+                <a href="{% url 'author_details' pk=author.id %}" class="stretched-link">Read more</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock content %}

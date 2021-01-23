@@ -1,0 +1,32 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+
+    <style>
+        .grid{
+            width: 100%;
+            display: grid;
+            grid-gap: 20px;
+            grid-template-columns: repeat(3, 300px);
+            grid-template-rows: repeat(auto-fill);
+        }
+    </style>
+
+
+    <h1>Users</h1>
+    <div class="btn-group mb-3" role="group" aria-label="...">
+        <a class="btn btn-outline-dark" href="{% url 'user_find' %}" role="button">Find</a>
+    </div>
+    <div class="grid">
+        {% for user in users %}
+            <div class="card mt-3 ml-3 shadow" style="width: 18rem; heigth: 8rem">
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                    <p class="card-text">{{ user.email }}</p>
+                    <a href="{% url 'user_details' pk=user.id %}" class="btn btn-primary">View details</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% include 'paginator.html' with data=users %}
+{% endblock content %}

@@ -1,0 +1,69 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+  <h1>Update information</h1>
+
+  <table class="table">
+      <form method="POST">
+      {% csrf_token %}
+        <thead>
+          <tr>
+            <th></th>
+            <td>Current</td>
+            <td>New</td>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">Password</th>
+            <td></td>
+            <td>{{ form.password }}</td>
+          </tr>
+          <tr>
+            <th scope="row">First name</th>
+            <td>{{ context_user.first_name }}</td>
+            <td>{{ form.first_name }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Middle nane</th>
+            <td>{{ context_user.middle_name }}</td>
+            <td>{{ form.middle_name}}
+          <tr>
+            <th scope="row">Last name</th>
+            <td>{{ context_user.last_name }}</td>
+            <td>{{ form.last_name }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Status</th>
+            <td>
+                {% if context_user.is_active %}
+                    Active
+                {% else %}
+                    Disabled
+                {% endif %}
+            </td>
+            <td>{{ form.is_active }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Permissions</th>
+            <td>
+            {% if context_user.role == 1 %}
+                    Admin
+                {% else %}
+                    Order user
+                {% endif %}
+            </td>
+            <td>{{ form.role }}</td>
+          </tr>
+
+          <tr>
+            <th scope="row">
+              <button type="submit" class="btn btn-success">Save</button>
+            </th>
+            <td></td>
+            <td></td>
+          </tr>
+
+        </tbody>
+      </form>
+    </table>
+{% endblock content %}

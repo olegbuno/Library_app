@@ -1,0 +1,52 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<div class="ui-widget">
+    <form method="GET">
+        <label for="user" class="form-label">User name</label>
+        <input class="form-control mb-3" id="user" name="user">
+        <label for="book" class="form-label">Book title</label>
+        <input class="form-control mb-3" id="book" name="book">
+        <button type="submit" class="btn btn-success mt-3 mb-5">Search</button>
+    </form>
+</div>
+
+{% for order in orders %}
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+            <h3 class="mb-0">{{ order.book.name }}</h3>
+            <div class="mb-1">
+                Lended by: <strong>{{ order.user.first_name }} {{ order.user.last_name }}</strong>
+            </div>
+            <div class="mb-1 text-muted">Order date: {{ order.created_at }}</div>
+            <div class="mb-1 text-muted">Scheduled return date: {{ order.plated_end_at }}</div>
+            {% if order.end_at %}
+                <div class="mb-1 text-muted">Return date: {{ order.end_at }}</div>
+            {% endif %}
+            <p class="card-text mb-auto">{{ order.description }}</p>
+            <a href="{% url 'order_details' pk=order.id %}" class="stretched-link">More</a>
+        </div>
+    </div>
+    {% endfor %}
+
+<script>
+    $( function() {
+    var availableTags = '{% url 'user_autocomplete' %}'
+    $( "#user" ).autocomplete({
+        source: availableTags,
+        minLength: 2
+        });
+    } );
+
+    $( function() {
+    var availableTags = '{% url 'book_autocomplete' %}'
+    $( "#book" ).autocomplete({
+        source: availableTags,
+        minLength: 2
+        });
+    } );
+</script>
+{% endblock content %}

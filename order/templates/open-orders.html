@@ -1,0 +1,29 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+
+{% if orders != 0 %}
+    <h1>Lended Books</h1>
+    {% for order in orders %}
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <h3 class="mb-0">{{ order.book.name }}</h3>
+                <div class="mb-1">
+                    Lended by: <strong>{{ order.user.first_name }} {{ order.user.last_name }}</strong>
+                </div>
+                <div class="mb-1 text-muted">Order date: {{ order.created_at }}</div>
+                <div class="mb-1 text-muted">Scheduled return date: {{ order.plated_end_at }}</div>
+                <p class="card-text mb-auto">{{ order.description }}</p>
+                <a href="{% url 'order_details' pk=order.id %}" class="stretched-link">More</a>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Oops...</h1>
+        <p class="lead">It seems nobody wants to read(</p>
+    </div>
+{% endif %}
+
+{% include 'paginator.html' with data=orders %}
+
+{% endblock content %}
