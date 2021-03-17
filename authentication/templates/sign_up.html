@@ -1,7 +1,7 @@
 {% extends 'wrapper.html' %}
 
 {% block optional-head-tags %}
-
+<link href="signin.css" rel="stylesheet">
 {% endblock %}
 
 
@@ -15,19 +15,19 @@ Sign-up procedure
   <form class="container form-signin col-md-4 center-block" method="POST">
     {% csrf_token %}
     <h1 class="h3 mb-3 fw-normal">Please complete form</h1>
-    <label for="inputEmail" class="visually-hidden">Email address</label>
+    <label for="inputEmail" class="visually-hidden" style="margin-right: 10px">Email address</label>
     {{ form.email }}
-    <label for="inputPassword" class="visually-hidden">Password</label>
+    <label for="inputPassword" class="visually-hidden" style="margin-right: 41px">Password</label>
     {{ form.password }}
     <p class="mb-4 text-muted">Required fields</p>
 
 
     
-    <label for="inputPassword" class="visually-hidden">First name</label>
+    <label for="inputPassword" class="visually-hidden" style="margin-right: 35px">First name</label>
     {{ form.first_name }}
-    <label for="inputPassword" class="visually-hidden">Middle name</label>
+    <label for="inputPassword" class="visually-hidden" style="margin-right: 15px">Middle name</label>
     {{ form.middle_name }}
-    <label for="inputPassword" class="visually-hidden">Last name</label>
+    <label for="inputPassword" class="visually-hidden" style="margin-right: 36px">Last name</label>
     {{ form.last_name }}
     <p class=" text-muted">Optional fields</p>
 

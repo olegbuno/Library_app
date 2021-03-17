@@ -9,7 +9,6 @@ from book.models import Book
 from authentication.models import CustomUser
 
 
-
 def orders_listing_view(request):
     template_name = "orders_listing.html"
     orders = Order.get_all()[::-1]
@@ -22,19 +21,21 @@ def orders_listing_view(request):
     except EmptyPage:
         context_orders = paginator.page(paginator.num_pages)
 
-    return render(request, template_name, {"orders":context_orders, "page_title": "Orders history"})
+    return render(request, template_name, {"orders": context_orders, "page_title": "Orders history"})
+
 
 def order_detail_view(request, pk):
     template_name = "order_detail.html"
     order = Order.get_by_id(pk)
-    return render(request, template_name, {"order":order, "page_title": f"Order #{order.id}"})
+    return render(request, template_name, {"order": order, "page_title": f"Order #{order.id}"})
+
 
 def lended_books_views(request):
     template_name = "open-orders.html"
     context = {}
     orders = Order.get_not_returned_books()
     if len(orders) == 0:
-            return render(request, template_name, {"orders":0, "page_title": "Lended books"})
+        return render(request, template_name, {"orders": 0, "page_title": "Lended books"})
 
     paginator = Paginator(orders, 10)
     page = request.GET.get('page', 1)
@@ -46,8 +47,9 @@ def lended_books_views(request):
         context["orders"] = paginator.page(paginator.num_pages)
 
     context["page_title"] = "Lended books"
-    context["page"] = page    
+    context["page"] = page
     return render(request, template_name, context)
+
 
 def book_autocomplete(request):
     from django.http import JsonResponse
@@ -60,6 +62,7 @@ def book_autocomplete(request):
             books_names.append(f'{book.name}//{book.id}')
 
         return JsonResponse(books_names, safe=False)
+
 
 def user_autocomplete(request):
     from django.http import JsonResponse
@@ -99,9 +102,11 @@ def make_order_view(request):
     context["form"] = form
     return render(request, template_name, context)
 
+
 def delete_order_view(request, pk):
     Order.delete_by_id(pk)
     return redirect("order_listing")
+
 
 def update_order_view(request, pk):
     context = {}
@@ -121,6 +126,7 @@ def update_order_view(request, pk):
     context["page_title"] = "Update order"
     context["order"] = order
     return render(request, template_name, context)
+
 
 def find_order(request):
     context = {}
@@ -142,3 +148,24 @@ def find_order(request):
         context["orders"] = orders
     return render(request, template_name, context)
 
+
+
+# def find_order(request):
+#     context = {}
+#     orders = None
+#     template_name = "order-search.html"
+#     target_book = request.GET.get('book')
+#     if target_book:
+#         target_book = target_book.split("//")[-1]
+#     target_user = request.GET.get('user')
+#     if target_user:
+#         target_user = target_user.split("//")[-1]
+#     if request.method == "GET":
+#         if target_book:
+#             orders = Order.objects.filter(book=Book.get_by_id(target_book))
+#         if target_user:
+#             orders = Order.objects.filter(user=CustomUser.get_by_id(target_user))
+#
+#         context["page_title"] = "Find order"
+#         context["orders"] = orders
+#     return render(request, template_name, context)
